@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <script src="node_modules/hellojs/src/hello.js"></script>
+    <script src="node_modules/hellojs/src/hello.polyfill.js"></script>
+    <script src="node_modules/hellojs/src/hello.commonjs.js"></script>
+    <script src="node_modules/hellojs/src/modules/github.js"></script>
+    <script src="node_modules/hellojs/src/modules/facebook.js"></script>
+    <script src="node_modules/hellojs/src/modules/google.js"></script>
+
+
+    <script>
+        hello.init({
+            facebook: FACEBOOK_CLIENT_ID,
+            google: GOOGLE_CLIENT_ID,
+            github: GITHUB_CLIENT_ID,
+        }, { redirect_uri: 'https://127.0.0.1:8080' });
+
+        const facebookLogin = () => {
+            hello('facebook').login().then((auth) => {
+                console.log(auth)
+                hello(auth.network).api('me').then((r) => {
+                    document.getElementById("profile").innerHTML += (auth.network + "<br>" + JSON.stringify(r) + "<br><br>")
+                })
+            })
+        }
+
+        const googleLogin = () => {
+            hello('google').login().then((auth) => {
+                console.log(auth)
+                hello(auth.network).api('me').then((r) => {
+                    document.getElementById("profile").innerHTML += (auth.network + "<br>" + JSON.stringify(r) + "<br><br>")
+                })
+            })
+        }
+
+        const githubLogin = () => {
+            hello('github').login({ response_type: 'code' }).then((auth) => {
+                console.log(auth)
+                hello(auth.network).api('me').then((r) => {
+                    document.getElementById("profile").innerHTML += (auth.network + "<br>" + JSON.stringify(r) + "<br><br>")
+                })
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <h1> Login Example </h1>
+    <button onclick="facebookLogin()">Facebook</button>
+    <button onclick="googleLogin()">Google</button>
+    <button onclick="githubLogin()">Github</button>
+
+    <br><br>
+    <h3>Profile from frontend</h3>
+    <p id=profile></p><br>
+
+</body>
+
+</html>
