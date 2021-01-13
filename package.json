@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "hellojs": "^1.18.4"
+    "hellojs": "^1.18.6"
   },
   "repository": {
     "type": "git",
